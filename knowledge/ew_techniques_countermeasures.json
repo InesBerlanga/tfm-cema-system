@@ -1,0 +1,640 @@
+[
+  {
+    "id": "TEW01",
+    "name": "Electromagnetic Reconnaissance",
+    "role": "adversary-technique",
+    "tactics": [
+      "detect"
+    ],
+    "description": "Detection and assessment of electromagnetic emissions in an area of interest in order to build the electromagnetic order of battle.",
+    "countermeasures": [
+      {
+        "id": "TEW13",
+        "name": "Electromagnetic Masking"
+      },
+      {
+        "id": "TEW14",
+        "name": "Terrain Masking"
+      },
+      {
+        "id": "TEW15",
+        "name": "EMCON"
+      },
+      {
+        "id": "TEW19",
+        "name": "Minimizing Transmissions"
+      },
+      {
+        "id": "TEW20",
+        "name": "Minimum Transmit Power Modes"
+      }
+    ]
+  },
+  {
+    "id": "TEW03",
+    "name": "Direction Finding",
+    "role": "adversary-technique",
+    "tactics": [
+      "exploit"
+    ],
+    "description": "Procedures used to determine the location of emitters. Techniques such as Lines of Bearing, Cuts, or Fixes may be employed.",
+    "countermeasures": [
+      {
+        "id": "TEW13",
+        "name": "Electromagnetic Masking"
+      },
+      {
+        "id": "TEW14",
+        "name": "Terrain Masking"
+      },
+      {
+        "id": "TEW15",
+        "name": "EMCON"
+      },
+      {
+        "id": "TEW19",
+        "name": "Minimizing Transmissions"
+      },
+      {
+        "id": "TEW20",
+        "name": "Minimum Transmit Power Modes"
+      }
+    ]
+  },
+  {
+    "id": "TEW04",
+    "name": "Electromagnetic Probing",
+    "role": "adversary-technique",
+    "tactics": [
+      "exploit"
+    ],
+    "description": "Intentional introduction of radiation into adversary systems in order to learn their specific functions and operational capabilities.",
+    "countermeasures": [
+      {
+        "id": "TEW12",
+        "name": "Electromagnetic Hardening"
+      },
+      {
+        "id": "TEW15",
+        "name": "EMCON"
+      },
+      {
+        "id": "TEW16",
+        "name": "WARM"
+      }
+    ]
+  },
+  {
+    "id": "TEW05",
+    "name": "Directed-Energy Weapons",
+    "role": "adversary-technique",
+    "tactics": [
+      "destroy"
+    ],
+    "description": "Weapons that emit highly concentrated energy to damage or destroy targets.",
+    "countermeasures": [
+      {
+        "id": "TEW12",
+        "name": "Electromagnetic Hardening"
+      },
+      {
+        "id": "TEW14",
+        "name": "Terrain Masking"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW05.1",
+    "name": "Lasers",
+    "role": "adversary-technique",
+    "tactics": [
+      "destroy"
+    ],
+    "description": "Directed-energy weapon that uses optical beams to blind sensors or destroy components.",
+    "countermeasures": [
+      {
+        "id": "TEW12",
+        "name": "Electromagnetic Hardening"
+      },
+      {
+        "id": "TEW14",
+        "name": "Terrain Masking"
+      }
+    ]
+  },
+  {
+    "id": "TEW05.2",
+    "name": "High-Power Microwave",
+    "role": "adversary-technique",
+    "tactics": [
+      "destroy"
+    ],
+    "description": "Emission of concentrated beams of electromagnetic energy to disrupt or destroy electronic systems.",
+    "countermeasures": [
+      {
+        "id": "TEW12",
+        "name": "Electromagnetic Hardening"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW05.3",
+    "name": "Electromagnetic Pulse",
+    "role": "adversary-technique",
+    "tactics": [
+      "destroy"
+    ],
+    "description": "Strong bursts of radiation used to permanently damage electrical systems.",
+    "countermeasures": [
+      {
+        "id": "TEW12",
+        "name": "Electromagnetic Hardening"
+      }
+    ]
+  },
+  {
+    "id": "TEW06",
+    "name": "Electromagnetic Jamming",
+    "role": "adversary-technique",
+    "tactics": [
+      "degrade-disrupt"
+    ],
+    "description": "Use of deliberately radiated energy to reduce the enemy's effective use of the electromagnetic spectrum.",
+    "countermeasures": [
+      {
+        "id": "TEW15",
+        "name": "EMCON"
+      },
+      {
+        "id": "TEW17",
+        "name": "Spread Spectrum"
+      },
+      {
+        "id": "TEW18",
+        "name": "Frequency Hopping"
+      },
+      {
+        "id": "TEW19",
+        "name": "Minimizing Transmissions"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW06.1",
+    "name": "Spot Jamming",
+    "role": "adversary-technique",
+    "tactics": [
+      "degrade-disrupt"
+    ],
+    "description": "Interference concentrated on a single frequency.",
+    "countermeasures": [
+      {
+        "id": "TEW17",
+        "name": "Spread Spectrum"
+      },
+      {
+        "id": "TEW18",
+        "name": "Frequency Hopping"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW06.2",
+    "name": "Barrage Jamming",
+    "role": "adversary-technique",
+    "tactics": [
+      "degrade-disrupt"
+    ],
+    "description": "Simultaneous interference across multiple frequencies over a wide frequency band.",
+    "countermeasures": [
+      {
+        "id": "TEW15",
+        "name": "EMCON"
+      },
+      {
+        "id": "TEW18",
+        "name": "Frequency Hopping"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW06.3",
+    "name": "Sweep Jamming",
+    "role": "adversary-technique",
+    "tactics": [
+      "degrade-disrupt"
+    ],
+    "description": "Rapid sweeping of power across a range of frequencies.",
+    "countermeasures": [
+      {
+        "id": "TEW17",
+        "name": "Spread Spectrum"
+      },
+      {
+        "id": "TEW18",
+        "name": "Frequency Hopping"
+      }
+    ]
+  },
+  {
+    "id": "TEW06.4",
+    "name": "Follower Jamming",
+    "role": "adversary-technique",
+    "tactics": [
+      "degrade-disrupt"
+    ],
+    "description": "Passive system that detects an enemy transmission and automatically attacks it.",
+    "countermeasures": [
+      {
+        "id": "TEW17",
+        "name": "Spread Spectrum"
+      },
+      {
+        "id": "TEW18",
+        "name": "Frequency Hopping"
+      }
+    ]
+  },
+  {
+    "id": "TEW06.5",
+    "name": "Standoff Jamming",
+    "role": "adversary-technique",
+    "tactics": [
+      "degrade-disrupt"
+    ],
+    "description": "Interference conducted from a protected stationary position within friendly areas to support an advance.",
+    "countermeasures": [
+      {
+        "id": "TEW17",
+        "name": "Spread Spectrum"
+      },
+      {
+        "id": "TEW18",
+        "name": "Frequency Hopping"
+      },
+      {
+        "id": "TEW19",
+        "name": "Minimizing Transmissions"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW06.6",
+    "name": "Escort Jamming",
+    "role": "adversary-technique",
+    "tactics": [
+      "degrade-disrupt"
+    ],
+    "description": "Use of jamming platforms that physically accompany maneuver forces.",
+    "countermeasures": [
+      {
+        "id": "TEW17",
+        "name": "Spread Spectrum"
+      },
+      {
+        "id": "TEW18",
+        "name": "Frequency Hopping"
+      },
+      {
+        "id": "TEW19",
+        "name": "Minimizing Transmissions"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW07",
+    "name": "CREW",
+    "role": "adversary-technique",
+    "tactics": [
+      "degrade-disrupt"
+    ],
+    "description": "Systems that block radio-controlled explosive device detonators.",
+    "countermeasures": [
+      {
+        "id": "TEW12",
+        "name": "Electromagnetic Hardening"
+      }
+    ]
+  },
+  {
+    "id": "TEW08",
+    "name": "Electromagnetic Deception",
+    "role": "adversary-technique",
+    "tactics": [
+      "deceive"
+    ],
+    "description": "Use of deliberately radiated energy to transmit misleading information.",
+    "countermeasures": [
+      {
+        "id": "TEW02",
+        "name": "Threat Warning"
+      },
+      {
+        "id": "TEW16",
+        "name": "WARM"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW08.1",
+    "name": "Simulative Deception",
+    "role": "adversary-technique",
+    "tactics": [
+      "deceive"
+    ],
+    "description": "Creation of false emission profiles to simulate capabilities that do not exist.",
+    "countermeasures": [
+      {
+        "id": "TEW02",
+        "name": "Threat Warning"
+      },
+      {
+        "id": "TEW16",
+        "name": "WARM"
+      }
+    ]
+  },
+  {
+    "id": "TEW08.2",
+    "name": "Manipulative Deception",
+    "role": "adversary-technique",
+    "tactics": [
+      "deceive"
+    ],
+    "description": "Use of real communication signals to transmit misleading indicators of friendly intentions.",
+    "countermeasures": [
+      {
+        "id": "TEW02",
+        "name": "Threat Warning"
+      },
+      {
+        "id": "TEW16",
+        "name": "WARM"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW08.3",
+    "name": "Imitative Deception",
+    "role": "adversary-technique",
+    "tactics": [
+      "deceive"
+    ],
+    "description": "Imitation of enemy emissions, such as entering their networks using their call signs, to cause confusion.",
+    "countermeasures": [
+      {
+        "id": "TEW16",
+        "name": "WARM"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW09",
+    "name": "Electromagnetic Intrusion",
+    "role": "adversary-technique",
+    "tactics": [
+      "deceive"
+    ],
+    "description": "Intentional insertion of energy into enemy transmission paths to deceive operators or generate confusion.",
+    "countermeasures": [
+      {
+        "id": "TEW12",
+        "name": "Electromagnetic Hardening"
+      },
+      {
+        "id": "TEW15",
+        "name": "EMCON"
+      },
+      {
+        "id": "TEW19",
+        "name": "Minimizing Transmissions"
+      }
+    ]
+  },
+  {
+    "id": "TEW10",
+    "name": "Meaconing",
+    "role": "adversary-technique",
+    "tactics": [
+      "deceive"
+    ],
+    "description": "Reception of navigation signals and retransmission on the same frequency to confuse the enemy.",
+    "countermeasures": [
+      {
+        "id": "TEW12",
+        "name": "Electromagnetic Hardening"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW11",
+    "name": "Defensive EA",
+    "role": "adversary-technique",
+    "tactics": [
+      "deceive"
+    ],
+    "description": "Reactive technique that uses electromagnetic energy to protect specific friendly platforms from incoming hostile threats.",
+    "countermeasures": [
+      {
+        "id": "TEW02",
+        "name": "Threat Warning"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW11.1",
+    "name": "Decoys",
+    "role": "adversary-technique",
+    "tactics": [
+      "deceive"
+    ],
+    "description": "Self-propelled, towed, or stationary systems used to divert attacks.",
+    "countermeasures": [
+      {
+        "id": "TEW02",
+        "name": "Threat Warning"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW11.2",
+    "name": "Flares or Chaff",
+    "role": "adversary-technique",
+    "tactics": [
+      "deceive"
+    ],
+    "description": "Objects used to confuse enemy missiles and radars.",
+    "countermeasures": [
+      {
+        "id": "TEW02",
+        "name": "Threat Warning"
+      },
+      {
+        "id": "TEW21",
+        "name": "Electromagnetic Warfare Reprogramming"
+      }
+    ]
+  },
+  {
+    "id": "TEW02",
+    "name": "Threat Warning",
+    "role": "defensive-countermeasure",
+    "tactics": [
+      "protect"
+    ],
+    "description": "Use of sensors to detect and alert about immediate risks so countermeasures can be activated.",
+    "countermeasures": []
+  },
+  {
+    "id": "TEW12",
+    "name": "Electromagnetic Hardening",
+    "role": "defensive-countermeasure",
+    "tactics": [
+      "protect"
+    ],
+    "description": "Filtering, shielding, and grounding actions used to protect systems against electromagnetic pulse or directed-energy weapons.",
+    "countermeasures": []
+  },
+  {
+    "id": "TEW13",
+    "name": "Electromagnetic Masking",
+    "role": "defensive-countermeasure",
+    "tactics": [
+      "protect"
+    ],
+    "description": "Controlled radiation on friendly frequencies to conceal real emissions.",
+    "countermeasures": []
+  },
+  {
+    "id": "TEW14",
+    "name": "Terrain Masking",
+    "role": "defensive-countermeasure",
+    "tactics": [
+      "protect"
+    ],
+    "description": "Tactical positioning of antennas behind terrain features or buildings to avoid enemy detection.",
+    "countermeasures": []
+  },
+  {
+    "id": "TEW15",
+    "name": "EMCON",
+    "role": "defensive-countermeasure",
+    "tactics": [
+      "protect"
+    ],
+    "description": "Selective and controlled use of emitters to optimize command and control while minimizing detection by enemy sensors.",
+    "countermeasures": []
+  },
+  {
+    "id": "TEW16",
+    "name": "WARM",
+    "role": "defensive-countermeasure",
+    "tactics": [
+      "protect"
+    ],
+    "description": "Keeping operational sensor features secret until combat to prevent the enemy from developing countermeasures.",
+    "countermeasures": []
+  },
+  {
+    "id": "TEW17",
+    "name": "Spread Spectrum",
+    "role": "defensive-countermeasure",
+    "tactics": [
+      "protect"
+    ],
+    "description": "Deliberate variation of frequency to reduce susceptibility to interference.",
+    "countermeasures": []
+  },
+  {
+    "id": "TEW18",
+    "name": "Frequency Hopping",
+    "role": "defensive-countermeasure",
+    "tactics": [
+      "protect"
+    ],
+    "description": "Rapid frequency changes to make interception and enemy jamming more difficult.",
+    "countermeasures": []
+  },
+  {
+    "id": "TEW19",
+    "name": "Minimizing Transmissions",
+    "role": "defensive-countermeasure",
+    "tactics": [
+      "protect"
+    ],
+    "description": "Reduction of the number, duration, frequency, and predictability of electromagnetic transmissions in order to decrease the probability of detection.",
+    "countermeasures": []
+  },
+  {
+    "id": "TEW20",
+    "name": "Minimum Transmit Power Modes",
+    "role": "defensive-countermeasure",
+    "tactics": [
+      "protect"
+    ],
+    "description": "Use of the lowest possible transmission power level required to maintain the communication link or sensor function.",
+    "countermeasures": []
+  },
+  {
+    "id": "TEW21",
+    "name": "Electromagnetic Warfare Reprogramming",
+    "role": "defensive-countermeasure",
+    "tactics": [
+      "protect"
+    ],
+    "description": "Deliberate alteration of software, hardware, or tactics of systems in response to changes in the enemy or the environment.",
+    "countermeasures": []
+  }
+]
