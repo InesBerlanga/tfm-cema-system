@@ -1,0 +1,21 @@
+{
+  "scenario": "gnss_5g_denial",
+  "db": "scenario_gnss_5g.db",
+  "attack_event_ids": [
+    "798706ae-9249-43c7-ba60-b43a46d3127d",
+    "c4a9187f-aea1-46cd-b67a-003e57c23fba",
+    "bf4c61b0-07ae-4a58-9fbc-aaba74057313",
+    "bcba9440-c54e-4d26-9334-2ca5e2fa6316",
+    "04a97914-9730-4415-8b4e-5c1f1a4ea587",
+    "f90dc1c5-f5b0-4b65-a982-7048a8fb425b",
+    "a7a06238-0a19-44f6-bcdf-155a61f03e12",
+    "f3a60930-f2af-4d34-871a-6be127dd5bdc"
+  ],
+  "noise_event_ids": [
+    "c831f0e6-d2f4-4722-9ec5-f3bed083be57",
+    "51c0de98-f815-48e5-97b7-ad4243d48399",
+    "dfd375e2-e5c4-4b56-8e28-9d5526779bae",
+    "6d57b6b6-2ee7-4861-9cfd-8df29bcddf87",
+    "e7bb859d-8d1d-42c1-ae18-0a9f7e25b0d3"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "domain": "unified",
+  "description": "Tácticas MITRE y EW en kill chain doctrinal de 5 fases. Las tácticas dentro del mismo tier son paralelas. Algunas tácticas (Deceive) aparecen en varios tiers porque doctrinalmente caben en distintas fases.",
+  "tiers": [
+    {
+      "name": "recon",
+      "tactics": ["reconnaissance", "resource-development", "detect"]
+    },
+    {
+      "name": "access",
+      "tactics": ["initial-access", "execution", "exploit"]
+    },
+    {
+      "name": "intrusion",
+      "tactics": [
+        "persistence", "privilege-escalation",
+        "defense-evasion", "credential-access", "deceive"
+      ]
+    },
+    {
+      "name": "control",
+      "tactics": ["discovery", "lateral-movement", "collection", "command-and-control"]
+    },
+    {
+      "name": "effect",
+      "tactics": [
+        "exfiltration", "impact",
+        "deceive", "degrade-disrupt", "destroy"
+      ]
+    }
+  ]
+}

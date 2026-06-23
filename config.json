@@ -1,0 +1,67 @@
+{
+  "_description": "Configuración del sistema TFM CEMA. Modifica aquí ventanas, pesos y parámetros sin tocar código. Los paths son relativos al directorio donde está este config.json (a menos que sean absolutos).",
+
+  "paths": {
+    "db": "tfm_system.db",
+    "mitre_techniques": "knowledge/mitre_techniques.json",
+    "ew_techniques": "knowledge/ew_techniques.json",
+    "tactics_order": "knowledge/tactics_order.json",
+    "ew_mitre_mapping": "knowledge/ew_mitre_mapping.json",
+    "mitre_countermeasures": "knowledge/mitre_techniques_countermeasures.json",
+    "ew_countermeasures": "knowledge/ew_techniques_countermeasures.json"
+  },
+
+  "llm": {
+    "_description": "Cliente LLM para cada uso. Si dos configuraciones coinciden el pipeline reutiliza el mismo cliente. El predictor merece más tokens y temperatura un pelo mayor porque genera reasoning más largo y se beneficia de cierta creatividad.",
+    "cyber": {
+      "model": "gpt",
+      "temperature": 0.1,
+      "max_tokens": 512
+    },
+    "ew": {
+      "model": "gpt",
+      "temperature": 0.1,
+      "max_tokens": 512
+    },
+    "predictor": {
+      "model": "gpt",
+      "temperature": 0.3,
+      "max_tokens": 3000
+    }
+  },
+
+  "correlation": {
+    "_description": "Parámetros globales del motor de correlación.",
+    "global_tau_t": 300.0
+  },
+
+  "rules": {
+    "_description": "Parámetros por regla. La ventana define hasta qué separación temporal se evalúa el par. Los parámetros adicionales son específicos de cada regla.",
+    "kill_chain": {
+      "window_seconds": 1800
+    },
+    "cross_domain": {
+      "window_seconds": 3600
+    },
+    "asset_convergence": {
+      "window_seconds": 600
+    },
+    "geo_proximity": {
+      "window_seconds": 600,
+      "max_distance_m": 5000.0,
+      "tau_d_m": 1000.0
+    },
+    "shared_artifact": {
+      "window_seconds": 7200
+    }
+  },
+
+  "rule_weights": {
+    "_description": "Peso intrínseco de cada regla. El motor normaliza por tipo de par, así que solo importan las proporciones relativas. La suma a 1.0 es por convención e interpretabilidad.",
+    "kill_chain": 0.30,
+    "cross_domain": 0.20,
+    "asset_convergence": 0.10,
+    "geo_proximity": 0.10,
+    "shared_artifact": 0.30
+  }
+}
