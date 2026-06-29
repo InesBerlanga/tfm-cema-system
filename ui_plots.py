@@ -101,14 +101,53 @@ def _compute_chain_layout(
 # Chain graph (Incidents detail) — vertical, mixed flow, ghost predictions
 # ============================================================================
 
+def compute_main_path(chain: Chain) -> set[tuple[str, str]]:
+    """Para cada evento (en orden cronológico), conserva ÚNICAMENTE su
+    arista entrante más fuerte hacia un evento anterior.
+
+    El conjunto resultante es un bosque (un árbol por cada evento "fuente"
+    sin predecesores correlacionados). Cada nodo no-fuente tiene exactamente
+    un padre: el evento previo que el sistema considera causa más fuerte.
+
+    Devuelve aristas canónicas como (older_id_str, newer_id_str).
+    """
+    events_sorted = sorted(chain.events, key=lambda e: e.timestamp)
+    if len(events_sorted) <= 1:
+        return set()
+
+    main_edges: set[tuple[str, str]] = set()
+    for i, ev_b in enumerate(events_sorted[1:], start=1):
+        best_edge: Optional[tuple[str, str]] = None
+        best_strength = 0.0
+        for ev_a in events_sorted[:i]:
+            key = (ev_a.event_id, ev_b.event_id)
+            strength = chain.pair_strengths.get(key, 0.0)
+            if strength > best_strength:
+                best_strength = strength
+                best_edge = (str(ev_a.event_id), str(ev_b.event_id))
+        if best_edge is not None:
+            main_edges.add(best_edge)
+    return main_edges
+
+
 def build_chain_graph_figure(
     chain: Chain,
     predictions: Optional[list] = None,  # list[TechniquePrediction]; top 3 se muestran
+    show_all_edges: bool = False,
 ) -> go.Figure:
     """Grafo vertical de una cadena. Top = evento más antiguo. Nodos coloreados
-    por dominio. Una arista única por par, grosor proporcional a strength
-    agregada, rojo si cross-dominio. Las top-3 predicciones se dibujan como
-    ghost nodes translúcidos debajo del último nivel."""
+    por dominio.
+
+    Por defecto solo se dibuja el **camino principal**: para cada evento,
+    su arista entrante más fuerte (forma un árbol/bosque). Esto evita el ruido
+    visual de múltiples aristas paralelas por par.
+
+    Si ``show_all_edges=True``, las aristas secundarias (resto de
+    correlaciones del par) se superponen al árbol en estilo discreto
+    (línea fina punteada, opacidad baja).
+
+    Aristas cross-dominio van en rojo prominente; el resto, en gris neutro.
+    Las top-3 predicciones se pintan como ghost nodes translúcidos al final."""
     fig = go.Figure()
 
     if not chain.events:
@@ -148,16 +187,35 @@ def build_chain_graph_figure(
                 return s
         return 0.0
 
-    # Layout
-    positions, levels, max_level = _compute_chain_layout(events_sorted, canonical_pairs)
+    # ===== Camino principal: aristas que forman el árbol =====
+    # Para cada evento, su predecesor más fuerte (greedy). Usadas para layout
+    # y dibujadas en estilo prominente. El resto de aristas son "secundarias".
+    main_edges = compute_main_path(chain)
+    secondary_edges = canonical_pairs - main_edges
+
+    # Layout: SOLO con las aristas del camino principal — así la topología
+    # visual es siempre un árbol limpio, sin saltos producidos por correlaciones
+    # transversales que oscurecerían el flujo causal.
+    positions, levels, max_level = _compute_chain_layout(events_sorted, main_edges)
+
+    # Si por filtros aplicados algún nodo quedó fuera del layout (aislado en el
+    # subgrafo del camino principal), le damos posición por defecto: nuevo nivel
+    # al final del bosque, X centrado.
+    for eid in event_by_id:
+        if eid not in positions:
+            positions[eid] = (0.0, -(max_level + 1))
+            levels[eid] = max_level + 1
+    max_level = max(levels.values()) if levels else 0
 
     # Dimensiones de las cajas (en unidades de datos)
-    BOX_W = 1.2
-    BOX_H = 0.55
+    BOX_W = 1.45
+    BOX_H = 0.78
 
-    # =================  Aristas (dibujadas PRIMERO, debajo)  =================
-    edges_drawn = 0
-    for (a, b) in canonical_pairs:
+    # =================  Aristas (dibujadas PRIMERO, debajo de los nodos)  =====
+    def _draw_edge(a: str, b: str, primary: bool) -> None:
+        """Dibuja una arista (línea + flecha). `primary` controla el estilo:
+        prominente para el camino principal, sutil (punteada, opacidad baja)
+        para correlaciones secundarias."""
         ev_a, ev_b = event_by_id[a], event_by_id[b]
         x0, y0 = positions[a]
         x1, y1 = positions[b]
@@ -166,13 +224,8 @@ def build_chain_graph_figure(
         is_cross_dom = ev_a.domain != ev_b.domain
 
         color = COLORS["edge_cross_domain"] if is_cross_dom else COLORS["edge_neutral"]
-        # Grosor proporcional a strength: 1.5px (min) ... 5.5px (max)
-        # Cross-dominio reciben +1px extra para prominencia visual
-        width = 1.5 + 4.0 * min(1.0, strength)
-        if is_cross_dom:
-            width += 1.0
 
-        # Reglas que dispararon para este par
+        # Reglas que dispararon para este par (para hover)
         pair_corrs = [
             c for c in chain.correlations
             if {str(c.event_a_id), str(c.event_b_id)} == {a, b}
@@ -181,35 +234,56 @@ def build_chain_graph_figure(
             f"  • {c.method.replace('_', ' ')} (score {c.score:.2f})"
             for c in sorted(pair_corrs, key=lambda c: -c.score)
         )
+        kind_label = "<b>main path</b>" if primary else "<i>secondary</i>"
         hover_text = (
-            f"<b>{event_label[a]} → {event_label[b]}</b><br>"
+            f"<b>{event_label[a]} → {event_label[b]}</b> · {kind_label}<br>"
             f"Aggregate strength: <b>{strength:.3f}</b><br>"
             f"{'<b>Cross-domain</b><br>' if is_cross_dom else ''}"
             f"Rules ({len(pair_corrs)}):<br>{rules_summary}"
         )
 
-        # Línea (para hover)
+        if primary:
+            # Grosor proporcional a strength: 1.5px..5.5px; cross-dom +1px
+            width = 1.5 + 4.0 * min(1.0, strength)
+            if is_cross_dom:
+                width += 1.0
+            line_kwargs = dict(color=color, width=width)
+            line_opacity = 1.0 if is_cross_dom else 0.9
+            arrow_opacity = 0.95 if is_cross_dom else 0.75
+            arrow_width = 1.1
+        else:
+            # Secundarias: discretas — punteadas, finas, semi-transparentes
+            line_kwargs = dict(color=color, width=1.2, dash="dot")
+            line_opacity = 0.45 if is_cross_dom else 0.30
+            arrow_opacity = 0.45 if is_cross_dom else 0.30
+            arrow_width = 0.8
+
         fig.add_trace(go.Scatter(
             x=[x0, x1], y=[y0, y1],
             mode="lines",
-            line=dict(color=color, width=width),
+            line=line_kwargs,
             hovertext=[hover_text, hover_text],
             hoverinfo="text",
             showlegend=False,
-            opacity=1.0 if is_cross_dom else 0.85,
+            opacity=line_opacity,
         ))
-
-        # Flecha sutil en el endpoint
         fig.add_annotation(
             x=x1, y=y1, ax=x0, ay=y0,
             xref="x", yref="y", axref="x", ayref="y",
             showarrow=True,
-            arrowhead=2, arrowsize=0.9, arrowwidth=1.1,
+            arrowhead=2, arrowsize=0.9, arrowwidth=arrow_width,
             arrowcolor=color,
-            opacity=0.95 if is_cross_dom else 0.7,
-            standoff=22,  # offset desde el endpoint para no solapar el nodo
+            opacity=arrow_opacity,
+            standoff=22,
         )
-        edges_drawn += 1
+
+    # Secundarias primero (quedan debajo del camino principal visualmente)
+    if show_all_edges:
+        for (a, b) in secondary_edges:
+            _draw_edge(a, b, primary=False)
+
+    for (a, b) in main_edges:
+        _draw_edge(a, b, primary=True)
 
     # =================  Nodos (encima de las aristas)  =================
     for eid, ev in event_by_id.items():
@@ -226,13 +300,44 @@ def build_chain_graph_figure(
             layer="above",
         )
 
-        # Etiqueta dentro: "E1  T1190"
-        techs_str = ", ".join(t.technique_id for t in ev.techniques)
-        label = f"<b>{event_label[eid]}</b>  {techs_str}"
+        # # Etiqueta dentro: "E1  T1190"
+        # techs_str = ", ".join(t.technique_id for t in ev.techniques)
+        # label = f"<b>{event_label[eid]}</b>  {techs_str}"
+        # fig.add_annotation(
+        #     x=x, y=y, text=label,
+        #     showarrow=False,
+        #     font=dict(size=11, family="JetBrains Mono, monospace", color="#0a0e1a"),
+        # )
+        
+        # Técnica principal para mostrar dentro del nodo
+        if ev.techniques:
+            main_tech = ev.techniques[0]
+            tech_id = main_tech.technique_id
+            tech_name = main_tech.technique_name
+            if len(ev.techniques) > 1:
+                tech_name += f" (+{len(ev.techniques)-1})"
+        else:
+            tech_id = "NO_TECH"
+            tech_name = "No technique"
+
+        label = (
+            f"<b>{event_label[eid]} · {tech_id}</b>"
+            f"<br><span style='font-size:10px'>{tech_name}</span>"
+        )
+
         fig.add_annotation(
-            x=x, y=y, text=label,
+            x=x,
+            y=y,
+            text=label,
             showarrow=False,
-            font=dict(size=11, family="JetBrains Mono, monospace", color="#0a0e1a"),
+            align="center",
+            xanchor="center",
+            yanchor="middle",
+            font=dict(
+                size=11,
+                family="JetBrains Mono, monospace",
+                color=COLORS["text"],
+            ),
         )
 
         # Trace invisible para hover detallado
@@ -258,12 +363,16 @@ def build_chain_graph_figure(
 
     # =================  Ghost nodes para predicciones (top-3)  =================
     ghost_count = 0
+    gx_positions: list[float] = []  # necesario para incluirlos en el rango X del eje
     if predictions:
         top3 = predictions[:3]
         ghost_y = -(max_level + 1.2)
         n = len(top3)
-        gx_positions = [(i - (n - 1) / 2) * X_SPACING_GHOST for i in range(n)]
-
+        # gx_positions = [(i - (n - 1) / 2) * X_SPACING_GHOST for i in range(n)]
+        all_chain_xs = [positions[eid][0] for eid in positions]
+        center_x = (min(all_chain_xs) + max(all_chain_xs)) / 2 if all_chain_xs else 0.0
+        gx_positions = [center_x + (i - (n - 1) / 2) * X_SPACING_GHOST for i in range(n)]
+        
         # Los ghost nodes "salen" de los eventos del último nivel observado
         last_eids = [eid for eid, lvl in levels.items() if lvl == max_level]
 
@@ -303,11 +412,17 @@ def build_chain_graph_figure(
                 opacity=0.4,
                 layer="above",
             )
-            # Etiqueta
-            label = f"<b>?</b>  {pred.technique_id}"
+            # Etiqueta: solo technique_id + technique_name, sin identificador de evento
+            label = (
+                f"<b>{pred.technique_id}</b>"
+                f"<br><span style='font-size:10px'>{pred.technique_name}</span>"
+            )
             fig.add_annotation(
                 x=gx, y=gy, text=label,
                 showarrow=False,
+                align="center",
+                xanchor="center",
+                yanchor="middle",
                 font=dict(size=11, family="JetBrains Mono, monospace",
                           color="#0a0e1a"),
                 opacity=0.85,
@@ -341,8 +456,8 @@ def build_chain_graph_figure(
     y_min = -(max_level + (1.8 if ghost_count > 0 else 0.6))
     y_max = 0.6
 
-    # Rango X dinámico según ancho del layout
-    all_xs = [p[0] for p in positions.values()]
+    # Rango X dinámico — incluye ghost nodes para que sus anotaciones no se desplacen
+    all_xs = [p[0] for p in positions.values()] + gx_positions
     if all_xs:
         x_min = min(all_xs) - 1.2
         x_max = max(all_xs) + 1.2

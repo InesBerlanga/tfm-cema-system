@@ -136,7 +136,19 @@ def _render_detail(chain: Chain, pipeline) -> None:
     st.markdown('<div class="section-divider">Chain graph</div>',
                 unsafe_allow_html=True)
 
-    show_graph = st.toggle("Show graph", value=True, key=f"show_graph_{chain.chain_id}")
+    col_toggle_graph, col_toggle_edges = st.columns([1, 2])
+    show_graph = col_toggle_graph.toggle(
+        "Show graph", value=True, key=f"show_graph_{chain.chain_id}",
+    )
+    show_all_edges = col_toggle_edges.toggle(
+        "Show secondary correlations",
+        value=False,
+        key=f"show_all_edges_{chain.chain_id}",
+        help="By default the graph shows only the **main path** — for each "
+             "event, its strongest predecessor edge — producing a clean "
+             "causal tree. Toggle on to overlay the remaining correlations "
+             "in a subtle dotted style.",
+    )
 
     if show_graph:
         # Recuperamos predicciones cacheadas si las hay (para los ghost nodes)
@@ -144,13 +156,19 @@ def _render_detail(chain: Chain, pipeline) -> None:
         cached_pred = predictions_cache.get(chain.chain_id)
         ghost_preds = cached_pred.predictions[:3] if cached_pred else None
 
-        fig = build_chain_graph_figure(chain, predictions=ghost_preds)
+        fig = build_chain_graph_figure(
+            chain,
+            predictions=ghost_preds,
+            show_all_edges=show_all_edges,
+        )
         st.plotly_chart(fig, use_container_width=True)
 
+        legend_bits = ["**Main path** = each event's strongest predecessor edge"]
+        if show_all_edges:
+            legend_bits.append("dotted edges = secondary correlations")
         if ghost_preds:
-            st.caption(f"Showing top {len(ghost_preds)} predicted technique(s) "
-                       f"as ghost nodes below the chain. See full list in "
-                       f"the Predictions panel.")
+            legend_bits.append(f"translucent boxes = top {len(ghost_preds)} predictions")
+        st.caption("  ·  ".join(legend_bits))
 
     # ============================================================  Events table
     st.markdown('<div class="section-divider">Events</div>',

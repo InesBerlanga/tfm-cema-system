@@ -63,7 +63,7 @@ with st.sidebar:
     st.slider(
         "Min pair strength",
         min_value=0.0, max_value=1.0,
-        value=0.0, step=0.05,
+        value=0.2, step=0.05,
         key="flt_min_strength",
         help="Pairs with aggregate strength below this threshold are dropped "
              "before extracting chains. Raise to see only solid incidents.",

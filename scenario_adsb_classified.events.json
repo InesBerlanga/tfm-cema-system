@@ -1,0 +1,118 @@
+{
+  "scenario": "adsb_partial_prediction",
+  "db": "scenario_adsb_classified.db",
+  "event_ids": [
+    "009d918d-48a5-4feb-beac-08c4489f3ec3",
+    "6a673e41-351a-4366-bbfa-d5d6b8c869d6",
+    "c3f204da-4db9-46ac-88c4-fda78c9b7e0d",
+    "8afe791b-724f-4dab-b6fd-5a114f223b32",
+    "c9b40321-b8bb-4104-9549-43ec8b24d156",
+    "74eb806a-2689-4888-bff2-7d7668bca5da"
+  ],
+  "expected_sequence": [
+    {
+      "technique_id": "TEW01",
+      "name": "Electromagnetic Reconnaissance",
+      "tactic": "detect",
+      "domain": "ew"
+    },
+    {
+      "technique_id": "TEW03",
+      "name": "Direction Finding",
+      "tactic": "exploit",
+      "domain": "ew"
+    },
+    {
+      "technique_id": "T1595",
+      "name": "Active Scanning",
+      "tactic": "reconnaissance",
+      "domain": "cyber"
+    },
+    {
+      "technique_id": "T1190",
+      "name": "Exploit Public-Facing Application",
+      "tactic": "initial-access",
+      "domain": "cyber"
+    },
+    {
+      "technique_id": "T1059",
+      "name": "Command and Scripting Interpreter",
+      "tactic": "execution",
+      "domain": "cyber"
+    },
+    {
+      "technique_id": "T1083",
+      "name": "File and Directory Discovery",
+      "tactic": "discovery",
+      "domain": "cyber"
+    }
+  ],
+  "classification_report": [
+    {
+      "idx": 1,
+      "domain": "ew",
+      "expected": "TEW01",
+      "event_id": "009d918d-48a5-4feb-beac-08c4489f3ec3",
+      "actual": [
+        "TEW01"
+      ],
+      "ok": true,
+      "error": null
+    },
+    {
+      "idx": 2,
+      "domain": "ew",
+      "expected": "TEW03",
+      "event_id": "6a673e41-351a-4366-bbfa-d5d6b8c869d6",
+      "actual": [
+        "TEW03"
+      ],
+      "ok": true,
+      "error": null
+    },
+    {
+      "idx": 3,
+      "domain": "cyber",
+      "expected": "T1595",
+      "event_id": "c3f204da-4db9-46ac-88c4-fda78c9b7e0d",
+      "actual": [
+        "T1595"
+      ],
+      "ok": true,
+      "error": null
+    },
+    {
+      "idx": 4,
+      "domain": "cyber",
+      "expected": "T1190",
+      "event_id": "8afe791b-724f-4dab-b6fd-5a114f223b32",
+      "actual": [
+        "T1190"
+      ],
+      "ok": true,
+      "error": null
+    },
+    {
+      "idx": 5,
+      "domain": "cyber",
+      "expected": "T1059",
+      "event_id": "c9b40321-b8bb-4104-9549-43ec8b24d156",
+      "actual": [
+        "T1059"
+      ],
+      "ok": true,
+      "error": null
+    },
+    {
+      "idx": 6,
+      "domain": "cyber",
+      "expected": "T1083",
+      "event_id": "74eb806a-2689-4888-bff2-7d7668bca5da",
+      "actual": [
+        "T1083"
+      ],
+      "ok": true,
+      "error": null
+    }
+  ]
+}

@@ -23,17 +23,17 @@ COLORS = {
     "text_secondary": "#94a3b8",
     "text_muted":     "#64748b",
 
-    # Dominio
-    "cyber": "#60a5fa",  # azul brillante
-    "ew":    "#fb923c",  # naranja cálido
+    # Dominio — más sobrios
+    "cyber": "#6f8fb3",   # azul apagado
+    "ew":    "#c18a5b",   # naranja/ocre apagado
 
     # Estado / alertas
-    "alert":   "#ef4444",  # rojo — cross-domain crítico
-    "warning": "#f59e0b",  # ámbar
-    "success": "#10b981",  # verde
+    "alert":   "#c08497",
+    "warning": "#d4a373",
+    "success": "#6fb1a0",
 
     # Grafo
-    "edge_neutral":      "#475569",  # gris intra-dominio
+    "edge_neutral":      "#7c8798",  # gris intra-dominio
     "edge_cross_domain": "#ef4444",  # rojo cross-dominio (prominente)
     "edge_ghost":        "#64748b",  # gris muted para predicciones
 }
@@ -151,7 +151,9 @@ button[kind="primary"], button[kind="secondary"] {
 }
 
 /* --- Reducir chrome de Streamlit --- */
-header[data-testid="stHeader"] { background: transparent; height: 0; }
+header[data-testid="stHeader"] {
+    background: rgba(10, 14, 26, 0.0);
+}
 [data-testid="stToolbar"] { display: none; }
 
 /* --- Containers con borde sutil --- */

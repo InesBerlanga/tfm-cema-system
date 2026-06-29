@@ -2,7 +2,7 @@
   "_description": "Configuración del sistema TFM CEMA. Modifica aquí ventanas, pesos y parámetros sin tocar código. Los paths son relativos al directorio donde está este config.json (a menos que sean absolutos).",
 
   "paths": {
-    "db": "tfm_system.db",
+    "db": "scenario_adsb_classified.db",
     "mitre_techniques": "knowledge/mitre_techniques.json",
     "ew_techniques": "knowledge/ew_techniques.json",
     "tactics_order": "knowledge/tactics_order.json",
@@ -32,7 +32,7 @@
 
   "correlation": {
     "_description": "Parámetros globales del motor de correlación.",
-    "global_tau_t": 300.0
+    "global_tau_t": 600.0
   },
 
   "rules": {
