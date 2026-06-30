@@ -1,0 +1,33 @@
+# Entorno virtual
+.venv/
+venv/
+env/
+
+# Bytecode Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Secretos y variables de entorno
+.env
+
+# Bases de datos (artefactos de ejecución)
+#*.db
+
+# Outputs de validación/experimentos
+sensitivity_output/
+weights_threshold_output/
+full_3d_output/
+
+# Archivos comprimidos
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/settings.json
+*.suo
+.idea/
