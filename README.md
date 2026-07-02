@@ -143,7 +143,7 @@ GPT_OSS_MODEL=<model-name>
 GEMMA_MODEL=<model-name>
 ```
 
-Sustituir `<LLM_SERVER_HOST>` por el host o IP del servidor donde esté desplegado el modelo. No es necesario documentar ni subir direcciones IP reales al repositorio. Si los endpoints o nombres de modelo cambian, deben modificarse en `.env`.
+Sustituir `<LLM_SERVER_HOST>` por el host o IP del servidor donde esté desplegado el modelo. 
 
 
 ## Ejecución de la interfaz
