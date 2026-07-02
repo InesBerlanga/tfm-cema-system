@@ -135,12 +135,12 @@ copy .env.example .env
 El fichero `.env.example` contiene las variables esperadas:
 
 ```text
-GPT_OSS_URL=http://<LLM_SERVER_HOST>:8000/v1
-GPT_OSS_URL_B=http://<LLM_SERVER_HOST>:8001/v1
-GEMMA_URL=http://<LLM_SERVER_HOST>:8003/v1
+GPT_OSS_URL=http://<LLM_SERVER_HOST>:<PORT>/v1
+GPT_OSS_URL_B=http://<LLM_SERVER_HOST>:<PORT>/v1
+GEMMA_URL=http://<LLM_SERVER_HOST>:<PORT>/v1
 
-GPT_OSS_MODEL=gpt-oss-20b
-GEMMA_MODEL=gemma-4-26b-a4b
+GPT_OSS_MODEL=<model-name>
+GEMMA_MODEL=<model-name>
 ```
 
 Sustituir `<LLM_SERVER_HOST>` por el host o IP del servidor donde esté desplegado el modelo. No es necesario documentar ni subir direcciones IP reales al repositorio. Si los endpoints o nombres de modelo cambian, deben modificarse en `.env`.
